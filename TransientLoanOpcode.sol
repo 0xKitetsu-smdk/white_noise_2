@@ -155,6 +155,7 @@ label_0000:
 	010C    61    PUSH2 0x03fb
 	010F    57    *JUMPI
 	0110    00    *STOP
+		// enter();
 	0111    5B    JUMPDEST
 	0112    33    CALLER
 	0113    60    PUSH1 0x00
@@ -168,6 +169,7 @@ label_0000:
 	011F    60    PUSH1 0x00
 	0121    B4    B4
 	0122    00    *STOP
+	
 	0123    5B    JUMPDEST
 	0124    63    PUSH4 0x77359400
 	0129    80    DUP1
@@ -398,7 +400,8 @@ label_0000:
 	0294    FD    *REVERT
 	0295    5B    JUMPDEST
 	0296    00    *STOP
-	0297    5B    JUMPDEST
+		// submit()
+	0297    5B    JUMPDEST 
 	0298    42    TIMESTAMP
 	0299    63    PUSH4 0x63763cbb
 	029E    11    GT

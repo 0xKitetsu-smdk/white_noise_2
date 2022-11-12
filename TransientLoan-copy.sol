@@ -31,7 +31,7 @@ function write(bytes32 varg0, bytes32 varg1) public payable {
 function 0xdfab6ef9() public payable { 
 }
 
-// loan fallback
+// loan fallback "0x2a514f15": "atlas(uint256,uint256,uint256)"
 function 0x2a514f15(uint256 varg0) public payable { 
     MEM[0] = msg.sender;
     MEM[0x20] = tx.origin;
@@ -41,8 +41,26 @@ function 0x2a514f15(uint256 varg0) public payable {
     require(T[0] == msg.sender,"Not the borrower!")
 }
 
+// 0x5bcb2fc6
 function submit() public payable { 
     require(0x63763cbb > block.timestamp);
+    require(T[0:] == 0 ,"Repay your debt!");
+
+    require( Dove_Addr.STATICCALL("balanceOf",msg.sender) );
+    require(success)
+    DOVE_balance_caller = M[0x60:]
+    require(DOVE_balance_caller > 0)
+
+    require(Dove_Addr.CALL("transferFrom",msg.sender,address(this),DOVE_balance_caller));
+
+    S[keccak256(tx.origin)] == 1
+    S[keccak256(msg.sender)] == 1
+
+    S["solvers"] += 1
+
+    S[S["solvers"] + "solvers"] = tx.origin
+
+
 }
 
 function isSolved() public payable { 
@@ -85,7 +103,7 @@ function __function_selector__(bytes4 function_selector) public payable {
         // "atlas(uint256,uint256,uint256)"
         0x2a514f15();
     } else if (0x5bcb2fc6 == function_selector >> 224) {
-        submit();
+        submit(); // ✅
     } else if (0x64d98f6e == function_selector >> 224) {
         isSolved(); // ✅
     } else {
