@@ -5,16 +5,22 @@
 uint256 stor_736f6c76657273; // STORAGE[0x736f6c76657273]
 
 function enter() public payable { 
+    T[0] = keccak256(msg.sender,address(this));
 }
 
 function write(bytes32 varg0, bytes32 varg1) public payable { 
-    MEM[RETURNDATASIZE()] = 0x7735940000;
-    v0 = dataCopy(MEM[(RETURNDATASIZE()) len (MSIZE())], MEM[(RETURNDATASIZE()) len (RETURNDATASIZE())]);
-    MEM[RETURNDATASIZE()] = varg0;
-    v1 = ripemd160hash(MEM[(RETURNDATASIZE()) len (MSIZE())], MEM[(RETURNDATASIZE()) len (MSIZE())]);
+    // 0x7735940000 (512_000_000_000)
+    MEM[0] = 0x7735940000;
+    v0 = dataCopy(0,0x20,0,0);
+    MEM[0x20] = varg0;
+    // 0                    0x20             0x40
+    // |-- 512_000_000_000 --|------- varg0 --| 
+    // v1 = ripemd160hash(MEM[(RETURNDATASIZE()) len (MSIZE())], MEM[(RETURNDATASIZE()) len (MSIZE())]);
+    v1 = ripemd160hash(0x20,0x40,0x20,0x40); // need-to-confirm
     if (v1) {
         if (!(MEM[0] >> 160)) {
-            require(0x77359400 < varg0RETURNDATASIZE(), RETURNDATASIZE());
+            // 0x77359400 (2_000_000_000)
+            require(0x77359400 < varg0);
             // exit;
             T[varg0] = varg1;
         }
@@ -25,11 +31,14 @@ function write(bytes32 varg0, bytes32 varg1) public payable {
 function 0xdfab6ef9() public payable { 
 }
 
+// loan fallback
 function 0x2a514f15(uint256 varg0) public payable { 
-    MEM[RETURNDATASIZE()] = msg.sender;
-    MEM[MSIZE()] = tx.origin;
-    require(uint32(keccak256(MEM[(RETURNDATASIZE()) len (MSIZE())])) == uint32(varg0)RETURNDATASIZE(), RETURNDATASIZE());
-    MEM[32] = RETURNDATASIZE();
+    MEM[0] = msg.sender;
+    MEM[0x20] = tx.origin;
+    require(uint32(keccak256(MEM[0,0x40])) == uint32(varg0));
+    // MEM[0x20] = RETURNDATASIZE();
+    MEM[0x20] = 0;
+    require(T[0] == msg.sender,"Not the borrower!")
 }
 
 function submit() public payable { 
@@ -37,14 +46,17 @@ function submit() public payable {
 }
 
 function isSolved() public payable { 
-    MEM[RETURNDATASIZE()] = msg.sender;
-    return STORAGE[keccak256(MEM[0 len 32])];
+    // MEM[RETURNDATASIZE()] = msg.sender;
+    // return STORAGE[keccak256(MEM[0 len 32])];
+    return STORAGE[keccak256(msg.sender)];
 }
-
+// solvers()
 function 0xe3b06401() public payable { 
     MEM[RETURNDATASIZE()] = 32;
-    MEM[MSIZE()] = stor_736f6c76657273;
+    MEM[0x20] = stor_736f6c76657273;
     v0 = v1 = 'solvert';
+    // 0     0x20                     0x40
+    // |--32 --|--stor_736f6c76657273 --| 
     while (v0 <= 'solvers' + stor_736f6c76657273) {
         MEM[MSIZE()] = STORAGE[v0];
         v0 += 1;
@@ -63,20 +75,23 @@ function __function_selector__(bytes4 function_selector) public payable {
     if (0x6c665a55 == function_selector >> 224) {
         borrow(address,uint256,address);
     } else if (0xe97dcb62 == function_selector >> 224) {
-        enter();
+        enter(); // ✅
     } else if (0xe2e52ec1 == function_selector >> 224) {
         write(bytes32,bytes32);
     } else if (0xdfab6ef9 == function_selector >> 224) {
+        // "startLoan()"
         0xdfab6ef9();
     } else if (0x2a514f15 == function_selector >> 224) {
+        // "atlas(uint256,uint256,uint256)"
         0x2a514f15();
     } else if (0x5bcb2fc6 == function_selector >> 224) {
         submit();
     } else if (0x64d98f6e == function_selector >> 224) {
-        isSolved();
+        isSolved(); // ✅
     } else {
         require(0xe3b06401 == function_selector >> 224RETURNDATASIZE(), RETURNDATASIZE());
-        0xe3b06401();
+        // solvers()
+        0xe3b06401(); // ✅
     }
 }
 
