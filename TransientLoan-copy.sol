@@ -28,7 +28,17 @@ function write(bytes32 varg0, bytes32 varg1) public payable {
     revert(0, RETURNDATASIZE());
 }
 
+// startLoan
 function 0xdfab6ef9() public payable { 
+    require(T[0] == 0 )
+    require(S[keccak256(msg.sender)] == 0)
+    T[0] = msg.sender
+    require(msg.sender.CALL("0x0c657eb0")) // bankroll()
+    // loop here
+    require( 2 * T[t] + t + 1 != t + 1 )
+    currentBal = T[t+2].STATICCALL("balanceOf",address(this))
+    require(currentBal >= T[t+1],"Repay your debt!")
+
 }
 
 // loan fallback "0x2a514f15": "atlas(uint256,uint256,uint256)"
@@ -39,6 +49,9 @@ function 0x2a514f15(uint256 varg0) public payable {
     // MEM[0x20] = RETURNDATASIZE();
     MEM[0x20] = 0;
     require(T[0] == msg.sender,"Not the borrower!")
+    t_0 = T[0]
+    require(varg0.DELEGATECALL())
+    require( t_0 == T[0])
 }
 
 // 0x5bcb2fc6
@@ -83,7 +96,25 @@ function 0xe3b06401() public payable {
 }
 
 function borrow(address varg0, uint256 varg1, address varg2) public payable { 
-    require(varg1 <= 10);
+    // calldata is tightly packed
+    (DoveToken_v0, amountToBorrow_v1, LoanRecipient_v2) = (varg0,varg1,varg2)
+
+    require(amountToBorrow_v1 <= 10);
+    require( T[0] == msg.sender,"Not the Borrower!");
+    t= timestamp()
+    k = T[t];
+    T[t] += 1
+
+    balance = DoveToken_v0.balanceOf(address(this)); 
+
+    T[2k+t+1] = balance
+    // T[2k+t+2] = DoveToken_v0
+    T[k+1] = DoveToken_v0
+
+    DoveToken_v0.transfer(LoanRecipient_v2,amountToBorrow_v1)
+
+
+
 }
 
 // Note: The function selector is not present in the original solidity code.
@@ -91,7 +122,7 @@ function borrow(address varg0, uint256 varg1, address varg2) public payable {
 
 function __function_selector__(bytes4 function_selector) public payable { 
     if (0x6c665a55 == function_selector >> 224) {
-        borrow(address,uint256,address);
+        borrow(address,uint256,address); // ✅
     } else if (0xe97dcb62 == function_selector >> 224) {
         enter(); // ✅
     } else if (0xe2e52ec1 == function_selector >> 224) {
@@ -101,7 +132,7 @@ function __function_selector__(bytes4 function_selector) public payable {
         0xdfab6ef9();
     } else if (0x2a514f15 == function_selector >> 224) {
         // "atlas(uint256,uint256,uint256)"
-        0x2a514f15();
+        0x2a514f15(); // ✅
     } else if (0x5bcb2fc6 == function_selector >> 224) {
         submit(); // ✅
     } else if (0x64d98f6e == function_selector >> 224) {
@@ -125,3 +156,4 @@ function __function_selector__(bytes4 function_selector) public payable {
 
 0xe3b0640100000000000000000000000000000000000000000000000000000000
 
+1710c6ec584bc805ad003fe8f94153053cb2952f923c1bea1e106f28cd8a5d6

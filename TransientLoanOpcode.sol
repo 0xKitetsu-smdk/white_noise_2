@@ -50,6 +50,7 @@ label_0000:
 	005D    3D    RETURNDATASIZE
 	005E    3D    RETURNDATASIZE
 	005F    FD    *REVERT
+		// borrow()
 	0060    5B    JUMPDEST
 	0061    60    PUSH1 0x60
 	0063    60    PUSH1 0x04
@@ -169,7 +170,6 @@ label_0000:
 	011F    60    PUSH1 0x00
 	0121    B4    B4
 	0122    00    *STOP
-	
 	0123    5B    JUMPDEST
 	0124    63    PUSH4 0x77359400
 	0129    80    DUP1
@@ -278,7 +278,6 @@ label_0000:
 	01B4    01    ADD
 	01B5    14    EQ
 	01B6    61    PUSH2 0x0212 // branches to stop()
-        // 
 	01B9    57    *JUMPI
 	01BA    80    DUP1
 	01BB    B3    B3
@@ -327,6 +326,7 @@ label_0000:
 	0211    56    *JUMP
 	0212    5B    JUMPDEST
 	0213    00    *STOP
+		// "atlas(uint256,uint256,uint256)"
 	0214    5B    JUMPDEST
 	0215    60    PUSH1 0x04
 	0217    35    CALLDATALOAD
