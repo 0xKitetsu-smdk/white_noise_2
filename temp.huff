@@ -1,0 +1,18 @@
+#define macro MAIN() = takes (0) returns (0) {
+    // returndatasize
+    // timestamp
+    // mstore
+    // 0x00
+    // timestamp
+    // 0x01
+    // add
+    // mstore
+    pc
+    timestamp
+    mstore
+}
+
+
+// 60098060093d393df33d42b43d42600101b4
+
+// 33C7E5EFFDB4BBE48E723BE4688554FC154F4414000000000000000089D6F915

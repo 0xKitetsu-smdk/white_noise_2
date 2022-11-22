@@ -1,8 +1,5 @@
-/*
 label_0000:
 	0000    58  PC
-	// Stack delta = +0
-	// Block terminates
 
 	0001    35    CALLDATALOAD
 	0002    60    PUSH1 0xe0
@@ -50,7 +47,7 @@ label_0000:
 	005D    3D    RETURNDATASIZE
 	005E    3D    RETURNDATASIZE
 	005F    FD    *REVERT
-		// borrow()
+		// "0x6c665a55": "borrow(address,uint256,address)",
 	0060    5B    JUMPDEST
 	0061    60    PUSH1 0x60
 	0063    60    PUSH1 0x04
@@ -156,7 +153,7 @@ label_0000:
 	010C    61    PUSH2 0x03fb
 	010F    57    *JUMPI
 	0110    00    *STOP
-		// enter();
+		// "0xe97dcb62" : enter();
 	0111    5B    JUMPDEST
 	0112    33    CALLER
 	0113    60    PUSH1 0x00
@@ -170,121 +167,122 @@ label_0000:
 	011F    60    PUSH1 0x00
 	0121    B4    B4
 	0122    00    *STOP
+		// "0xe2e52ec1": "write(bytes32,bytes32)"
 	0123    5B    JUMPDEST
-	0124    63    PUSH4 0x77359400
-	0129    80    DUP1
-	012A    60    PUSH1 0x08
-	012C    1B    SHL
-	012D    3D    RETURNDATASIZE
-	012E    52    MSTORE
-	012F    3D    RETURNDATASIZE
-	0130    3D    RETURNDATASIZE
-	0131    59    MSIZE
-	0132    3D    RETURNDATASIZE
-	0133    60    PUSH1 0x04
-	0135    5A    GAS
-	0136    FA    STATICCALL
-	0137    59    MSIZE
+	0124    63    PUSH4 0x77359400	// [0x77359400]						
+	0129    80    DUP1				// [0x77359400,0x77359400]
+	012A    60    PUSH1 0x08		// [8,0x77359400,0x77359400]
+	012C    1B    SHL				// [0x7735940000,0x77359400]
+	012D    3D    RETURNDATASIZE	// [0,0x7735940000,0x77359400]
+	012E    52    MSTORE			// [0x77359400]						|0x00| -- 0x7735940000 -- |0x20| 
+	012F    3D    RETURNDATASIZE	// [0,0x77359400]
+	0130    3D    RETURNDATASIZE	// [0,0,0x77359400]
+	0131    59    MSIZE				// [0x20,0,0,0x77359400]
+	0132    3D    RETURNDATASIZE	// [0,0x20,0,0,0x77359400]
+	0133    60    PUSH1 0x04		// [0x04,0,0x20,0,0,0x77359400]
+	0135    5A    GAS				// [gas(),0x04,0,0x20,0,0,0x77359400]
+	0136    FA    STATICCALL		// [1,0x77359400]
+	0137    59    MSIZE				// [0x20,1,0x77359400]
 	0138    1B    SHL
-	0139    50    POP
+	0139    50    POP				// [0x77359400]
 	013A    60    PUSH1 0x04
-	013C    35    CALLDATALOAD
-	013D    80    DUP1
-	013E    3D    RETURNDATASIZE
-	013F    52    MSTORE
-	0140    59    MSIZE
-	0141    3D    RETURNDATASIZE
-	0142    59    MSIZE
-	0143    3D    RETURNDATASIZE
-	0144    60    PUSH1 0x03
-	0146    5A    GAS
-	0147    FA    STATICCALL
-	0148    15    ISZERO
+	013C    35    CALLDATALOAD		// [C[4],0x77359400]
+	013D    80    DUP1				// [C[4],C[4],0x77359400]
+	013E    3D    RETURNDATASIZE	// [0x20,C[4],C[4],0x77359400]
+	013F    52    MSTORE			// [C[4],0x77359400]				|0x00| -- 0x7735940000 -- |0x20| -- C[4] -- |0x40|
+	0140    59    MSIZE				// [0x40,C[4],0x77359400]
+	0141    3D    RETURNDATASIZE	// [0x20,0x40,C[4],0x77359400]
+	0142    59    MSIZE				// [0x40,0x20,0x40,C[4],0x77359400]
+	0143    3D    RETURNDATASIZE	// [0x20,0x40,0x20,0x40,C[4],0x77359400]
+	0144    60    PUSH1 0x03		// [0x03,0x20,0x40,0x20,0x40,C[4],0x77359400]
+	0146    5A    GAS				// [gas(),0x03,0x20,0x40,0x20,0x40,C[4],0x77359400]
+	0147    FA    STATICCALL		// [0/1,C[4],0x77359400]
+	0148    15    ISZERO			// [1/0,C[4],0x77359400]
 	0149    61    PUSH2 0x03fb
 	014C    57    *JUMPI
-	014D    60    PUSH1 0x00
-	014F    51    MLOAD
+	014D    60    PUSH1 0x00		// [0,C[4],0x77359400]
+	014F    51    MLOAD				// [M[0],C[4],0x77359400]
 	0150    60    PUSH1 0xa0
-	0152    1C    SHR
+	0152    1C    SHR				// [M[0] >> 160,C[4],0x77359400]
 	0153    61    PUSH2 0x03fb
 	0156    57    *JUMPI
-	0157    80    DUP1
-	0158    91    SWAP2
-	0159    10    LT
+	0157    80    DUP1				// [C[4],C[4],0x77359400]
+	0158    91    SWAP2				// [0x77359400,C[4],C[4]]
+	0159    10    LT				// [0x77359400 < C[4],C[4]]
 	015A    61    PUSH2 0x0161
 	015D    57    *JUMPI
 	015E    3D    RETURNDATASIZE
 	015F    3D    RETURNDATASIZE
 	0160    FD    *REVERT
-	0161    5B    JUMPDEST
+	0161    5B    JUMPDEST			// [C[4]]
 	0162    60    PUSH1 0x24
-	0164    35    CALLDATALOAD
-	0165    90    SWAP1
-	0166    B4    B4
+	0164    35    CALLDATALOAD		// [C[24],C[4]]
+	0165    90    SWAP1				// [C[4],C[24]]
+	0166    B4    B4				// []
 	0167    00    *STOP
     // ------------------------ 0xdfab6ef9 startLoan() starts here
 	0168    5B    JUMPDEST
-	0169    60    PUSH1 0x00
-	016B    B3    B3
-	016C    15    ISZERO
+	0169    60    PUSH1 0x00		// [0]
+	016B    B3    B3				// [T[0]]
+	016C    15    ISZERO			// [iszero(T[0])]
 	016D    61    PUSH2 0x017e
 	0170    57    *JUMPI
-	0171    63    PUSH4 0x583fe886
+	0171    63    PUSH4 0x583fe886	
 	0176    60    PUSH1 0x00
 	0178    52    MSTORE
 	0179    60    PUSH1 0x04
 	017B    60    PUSH1 0x1c
 	017D    FD    *REVERT
-	017E    5B    JUMPDEST
-	017F    33    CALLER
-	0180    3D    RETURNDATASIZE
-	0181    52    MSTORE
-	0182    59    MSIZE
-	0183    3D    RETURNDATASIZE
-	0184    20    SHA3
-	0185    54    SLOAD
+	017E    5B    JUMPDEST			// []
+	017F    33    CALLER			// [msg.sender]
+	0180    3D    RETURNDATASIZE	// [0,msg.sender]
+	0181    52    MSTORE			// []							|0x00| -- 0x7735940000 -- |0x20|
+	0182    59    MSIZE				// [0x20]
+	0183    3D    RETURNDATASIZE	// [0,0x20]
+	0184    20    SHA3				// [sha3(0,0x20)]
+	0185    54    SLOAD				// [sload(sha3(0,0x20))]
 	0186    61    PUSH2 0x03fb
 	0189    57    *JUMPI
-	018A    33    CALLER
-	018B    60    PUSH1 0x00
-	018D    B4    B4
-	018E    63    PUSH4 0x0c657eb0
-	0193    3D    RETURNDATASIZE
-	0194    52    MSTORE
-	0195    3D    RETURNDATASIZE
-	0196    3D    RETURNDATASIZE
-	0197    60    PUSH1 0x04
-	0199    60    PUSH1 0x1c
-	019B    82    DUP3
-	019C    33    CALLER
-	019D    5A    GAS
-	019E    F1    CALL
-	019F    15    ISZERO
+	018A    33    CALLER			// [msg.sender]
+	018B    60    PUSH1 0x00		// [0,msg.sender]
+	018D    B4    B4				// []							// T[0] = msg.sender
+	018E    63    PUSH4 0x0c657eb0	// [0x0c657eb0]
+	0193    3D    RETURNDATASIZE	// [0,0x0c657eb0]
+	0194    52    MSTORE			// []							|0x00| -- 0x0c657eb0  -- |0x20|
+	0195    3D    RETURNDATASIZE	// [0]
+	0196    3D    RETURNDATASIZE	// [0,0]
+	0197    60    PUSH1 0x04		// [0x04,0,0]
+	0199    60    PUSH1 0x1c		// [0x1c,0x04,0,0]
+	019B    82    DUP3				// [0,0x1c,0x04,0,0]
+	019C    33    CALLER			// [msg.sender,0,0x1c,0x04,0,0]
+	019D    5A    GAS				// [gas(),msg.sender,0,0x1c,0x04,0,0]
+	019E    F1    CALL				// [0/1]
+	019F    15    ISZERO			// [1/0]
 	01A0    61    PUSH2 0x03fb
 	01A3    57    *JUMPI
-	01A4    42    TIMESTAMP
-	01A5    B3    B3
-	01A6    42    TIMESTAMP
-	01A7    60    PUSH1 0x01
-	01A9    01    ADD
-	01AA    5B    JUMPDEST
-	01AB    80    DUP1
-	01AC    82    DUP3
-	01AD    60    PUSH1 0x01
-	01AF    1B    SHL
-	01B0    42    TIMESTAMP
-	01B1    60    PUSH1 0x01
-	01B3    01    ADD
-	01B4    01    ADD
-	01B5    14    EQ
+	01A4    42    TIMESTAMP			// [t]
+	01A5    B3    B3				// [T(t)]
+	01A6    42    TIMESTAMP			// [t,T(t)]
+	01A7    60    PUSH1 0x01		// [1,t,T(t)]
+	01A9    01    ADD				// [t+1,T(t)]
+	01AA    5B    JUMPDEST			
+	01AB    80    DUP1				// [t+1,t+1,T(t)]
+	01AC    82    DUP3				// [T(t),t+1,t+1,T(t)]
+	01AD    60    PUSH1 0x01		// [1,T(t),t+1,t+1,T(t)]
+	01AF    1B    SHL				// [2*T(t),t+1,t+1,T(t)]
+	01B0    42    TIMESTAMP			// [t,2*T(t),t+1,t+1,T(t)]
+	01B1    60    PUSH1 0x01		// [1,t,2*T(t),t+1,t+1,T(t)]
+	01B3    01    ADD				// [t+1,2*T(t),t+1,t+1,T(t)]
+	01B4    01    ADD				// [2*T(t)+t+1,t+1,t+1,T(t)]
+	01B5    14    EQ				// [2*T(t)+t+1 == t+1,t+1,T(t)]
 	01B6    61    PUSH2 0x0212 // branches to stop()
-	01B9    57    *JUMPI
-	01BA    80    DUP1
-	01BB    B3    B3
-	01BC    81    DUP2
-	01BD    60    PUSH1 0x01
-	01BF    01    ADD
-	01C0    B3    B3
+	01B9    57    *JUMPI			// [t+1,T(t)]
+	01BA    80    DUP1				// [t+1,t+1,T(t)]
+	01BB    B3    B3				// [T(t+1),t+1,T(t)]
+	01BC    81    DUP2				// [t+1,T(t+1),t+1,T(t)]
+	01BD    60    PUSH1 0x01		// [1,t+1,T(t+1),t+1,T(t)]
+	01BF    01    ADD				// [t+2,T(t+1),t+1,T(t)]
+	01C0    B3    B3				// [T(t+2),T(t+1),t+1,T(t)]
 	01C1    63    PUSH4 0x70a08231
 	01C6    3D    RETURNDATASIZE
 	01C7    52    MSTORE
@@ -326,10 +324,10 @@ label_0000:
 	0211    56    *JUMP
 	0212    5B    JUMPDEST
 	0213    00    *STOP
-		// "atlas(uint256,uint256,uint256)"
-	0214    5B    JUMPDEST
+		// "0x2a514f15" : "atlas(uint256,uint256,uint256)"
+	0214    5B    JUMPDEST			
 	0215    60    PUSH1 0x04
-	0217    35    CALLDATALOAD
+	0217    35    CALLDATALOAD			// [c[4]]
 	0218    63    PUSH4 0xffffffff
 	021D    16    AND
 	021E    33    CALLER
@@ -373,17 +371,17 @@ label_0000:
 	0269    60    PUSH1 0x1c
 	026B    FD    *REVERT
 	026C    5B    JUMPDEST
-	026D    60    PUSH1 0x04
-	026F    35    CALLDATALOAD
-	0270    60    PUSH1 0x60
-	0272    1C    SHR
-	0273    3D    RETURNDATASIZE
-	0274    3D    RETURNDATASIZE
-	0275    3D    RETURNDATASIZE
-	0276    3D    RETURNDATASIZE
-	0277    93    SWAP4
-	0278    60    PUSH1 0x6d
-	027A    F4    DELEGATECALL
+	026D    60    PUSH1 0x04		// [0x04]
+	026F    35    CALLDATALOAD		// [C[4]]
+	0270    60    PUSH1 0x60		// [0x60,C[4]]
+	0272    1C    SHR				// [varg0 >> 96]
+	0273    3D    RETURNDATASIZE	// [0,varg0 >> 96]
+	0274    3D    RETURNDATASIZE	// [0,0,varg0 >> 96]
+	0275    3D    RETURNDATASIZE	// [0,0,0,varg0 >> 96]
+	0276    3D    RETURNDATASIZE	// [0,0,0,0,varg0 >> 96]
+	0277    93    SWAP4				// [varg0 >> 96,0,0,0,0]
+	0278    60    PUSH1 0x6d		// [0x6d,varg0 >> 96,0,0,0,0]
+	027A    F4    DELEGATECALL		
 	027B    15    ISZERO
 	027C    61    PUSH2 0x03fb
 	027F    57    *JUMPI

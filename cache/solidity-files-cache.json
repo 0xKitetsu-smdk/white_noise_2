@@ -786,9 +786,58 @@
         }
       }
     },
+    "test/Attacker.sol": {
+      "lastModificationDate": 1668536358549,
+      "contentHash": "89e8d470ddf7735c045f4acbd3135c6d",
+      "sourceName": "test/Attacker.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.17",
+      "artifacts": {
+        "Attacker": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Attacker.sol/Attacker.json"
+        },
+        "IERC20": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Attacker.sol/IERC20.json"
+        },
+        "IFlashLoanReceiver": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Attacker.sol/IFlashLoanReceiver.json"
+        },
+        "ITransientLoan": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Attacker.sol/ITransientLoan.json"
+        }
+      }
+    },
     "test/Counter.t.sol": {
-      "lastModificationDate": 1668331648566,
-      "contentHash": "d8f9225ca28c7e349e9f6804c169b3b8",
+      "lastModificationDate": 1668528766175,
+      "contentHash": "a5681e3e77a491e1356bbec1e59a4bb3",
       "sourceName": "test/Counter.t.sol",
       "solcConfig": {
         "settings": {
@@ -832,7 +881,8 @@
         "lib/forge-std/src/Test.sol",
         "lib/forge-std/src/Vm.sol",
         "lib/forge-std/src/console.sol",
-        "lib/forge-std/src/console2.sol"
+        "lib/forge-std/src/console2.sol",
+        "test/Attacker.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
